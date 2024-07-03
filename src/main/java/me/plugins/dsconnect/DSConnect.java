@@ -27,7 +27,7 @@ public final class DSConnect extends JavaPlugin {
 
         this.getLogger().info("Plugin has been enabled!");
 
-
+        this.socketManager.initializeConnection();
     }
 
     @Override
