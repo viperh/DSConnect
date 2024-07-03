@@ -2,6 +2,7 @@ package me.plugins.dsconnect.Socket;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import me.plugins.dsconnect.DSConnect;
 import me.plugins.dsconnect.Listeners.SocketListener;
 import me.plugins.dsconnect.Utils.ExternalConfigUtils;
@@ -34,6 +35,7 @@ public class SocketManager {
         }
 
         this.url = "http://" + host + ":" + port;
+        DSConnect.instance.getLogger().info("Connecting URL: " + this.url);
 
     }
 
@@ -53,8 +55,14 @@ public class SocketManager {
                 this.socket = IO.socket(this.url, options);
 
                 this.addListener("message", new SocketListener());
+                this.addListener("connect", new Emitter.Listener() {
 
-                this.socket.connect();
+                    @Override
+                    public void call(Object... args) {
+                        DSConnect.instance.getLogger().info("Connected to socket server!");
+                    }
+                });
+
                 if (this.socket.isActive()){
                     DSConnect.instance.getLogger().info("Connected to discord bot! Channel ID: " + channelId);
                 }
@@ -79,6 +87,10 @@ public class SocketManager {
 
 
     public void addListener(String event, SocketListener listener){
+        this.socket.on(event, listener);
+    }
+
+    public void addListener(String event, Emitter.Listener listener){
         this.socket.on(event, listener);
     }
 
