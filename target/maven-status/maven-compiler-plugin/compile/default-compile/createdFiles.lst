@@ -1,0 +1,5 @@
+me\plugins\dsconnect\DSConnect.class
+me\plugins\dsconnect\Utils\ExternalConfigUtils.class
+me\plugins\dsconnect\Listeners\onMessage.class
+me\plugins\dsconnect\Listeners\SocketListener.class
+me\plugins\dsconnect\Socket\SocketManager.class

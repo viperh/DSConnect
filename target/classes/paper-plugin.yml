@@ -1,0 +1,4 @@
+name: DSConnect
+version: '1.0'
+main: me.plugins.dsconnect.DSConnect
+api-version: '1.20'
