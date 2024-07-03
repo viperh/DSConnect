@@ -34,7 +34,8 @@ public class SocketManager {
             DSConnect.instance.getLogger().severe("Invalid host or port!");
         }
 
-        this.url = "http://" + host + ":" + port;
+        //this.url = "http://" + host + ":" + port;
+        this.url = "https://bot.qviperhserver.software";
         DSConnect.instance.getLogger().info("Connecting URL: " + this.url);
 
     }
