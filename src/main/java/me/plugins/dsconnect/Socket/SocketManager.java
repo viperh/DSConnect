@@ -100,6 +100,9 @@ public class SocketManager {
     }
 
 
+    public void connect(){
+        this.initializeConnection();
+    }
 
     public void disconnect(){
         this.socket.disconnect();
