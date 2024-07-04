@@ -26,7 +26,7 @@ public final class DSConnect extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onMessage(socketManager), this);
 
         this.getLogger().info("Plugin has been enabled!");
-
+        this.getLogger().info("Connecting to socket server...");
         this.socketManager.connect();
     }
 

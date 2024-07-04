@@ -43,33 +43,29 @@ public class SocketManager {
     public void initializeConnection(){
         while(true){
             try{
-
+                DSConnect.instance.getLogger().info("Getting channelId from config.yml...");
                 String channelId = config.getConfiguration().getString("channelId");
 
                 if(channelId == null){
                     throw new Error("Channel ID not found in config.yml");
                 }
+                DSConnect.instance.getLogger().info("Creating Options for socket...");
                 IO.Options options = IO.Options.builder()
                         .setExtraHeaders(Collections.singletonMap("channelId", Collections.singletonList(channelId)))
                         .build();
-
+                DSConnect.instance.getLogger().info("Creating socket connection....");
                 this.socket = IO.socket(this.url, options);
-
+                DSConnect.instance.getLogger().info("Adding listeners...");
                 this.addListener("message", new SocketListener());
-                this.addListener("connect", new Emitter.Listener() {
-
-                    @Override
-                    public void call(Object... args) {
-                        DSConnect.instance.getLogger().info("Connected to socket server!");
-                    }
-                });
+                this.addListener("connect", args -> DSConnect.instance.getLogger().info("Connected to socket server!"));
 
                 if (this.socket.isActive()){
                     DSConnect.instance.getLogger().info("Connected to discord bot! Channel ID: " + channelId);
+                    return;
                 }
 
 
-                return;
+
             }
             catch(Exception e){
                 DSConnect.instance.getLogger().severe("Failed to connect to discord bot. Retrying in 10 seconds...");
