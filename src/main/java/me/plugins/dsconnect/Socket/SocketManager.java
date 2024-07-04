@@ -8,6 +8,9 @@ import me.plugins.dsconnect.Listeners.SocketListener;
 import me.plugins.dsconnect.Utils.ExternalConfigUtils;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SocketManager {
 
@@ -45,13 +48,18 @@ public class SocketManager {
             try{
                 DSConnect.instance.getLogger().info("Getting channelId from config.yml...");
                 String channelId = config.getConfiguration().getString("channelId");
-
+                DSConnect.instance.getLogger().info("ChannelID: " + channelId);
                 if(channelId == null){
                     throw new Error("Channel ID not found in config.yml");
                 }
                 DSConnect.instance.getLogger().info("Creating Options for socket...");
+
+                Map<String, List<String>> headers = new HashMap<>();
+
+                headers.put("channelId", Collections.singletonList(channelId));
+
                 IO.Options options = IO.Options.builder()
-                        .setExtraHeaders(Collections.singletonMap("channelId", Collections.singletonList(channelId)))
+                        .setExtraHeaders(headers)
                         .build();
                 DSConnect.instance.getLogger().info("Creating socket connection....");
                 this.socket = IO.socket(this.url, options);
