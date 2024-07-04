@@ -59,6 +59,8 @@ public class SocketManager {
                 this.addListener("message", new SocketListener());
                 this.addListener("connect", args -> DSConnect.instance.getLogger().info("Connected to socket server!"));
 
+                this.socket.connect();
+
                 if (this.socket.isActive()){
                     DSConnect.instance.getLogger().info("Connected to discord bot! Channel ID: " + channelId);
                     break;
