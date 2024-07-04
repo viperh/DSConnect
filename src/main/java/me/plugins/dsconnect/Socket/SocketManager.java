@@ -72,7 +72,7 @@ public class SocketManager {
                 this.socket.connect();
 
                 if (this.socket.isActive()){
-                    DSConnect.instance.getLogger().info("Connected to discord bot! Channel ID: " + channelId);
+                    DSConnect.instance.getLogger().info("Connected to discord bot! Channel IDs: " + channelIds);
                     break;
                 }
 
