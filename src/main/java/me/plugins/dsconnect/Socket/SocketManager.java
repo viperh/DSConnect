@@ -47,23 +47,25 @@ public class SocketManager {
         while(true){
             try{
                 DSConnect.instance.getLogger().info("Getting channelId from config.yml...");
-                String channelId = config.getConfiguration().getString("channelId");
-                DSConnect.instance.getLogger().info("ChannelID: " + channelId);
-                if(channelId == null){
-                    throw new Error("Channel ID not found in config.yml");
-                }
+                List<String> channelIds = config.getConfiguration().getStringList("channelId");
+                DSConnect.instance.getLogger().info("ChannelID: " + channelIds);
+
                 DSConnect.instance.getLogger().info("Creating Options for socket...");
 
                 Map<String, List<String>> headers = new HashMap<>();
 
-                headers.put("channelId", Collections.singletonList(channelId));
+                headers.put("channelIds", channelIds);
 
                 IO.Options options = IO.Options.builder()
                         .setExtraHeaders(headers)
                         .build();
+
                 DSConnect.instance.getLogger().info("Creating socket connection....");
+
                 this.socket = IO.socket(this.url, options);
+
                 DSConnect.instance.getLogger().info("Adding listeners...");
+
                 this.addListener("message", new SocketListener());
                 this.addListener("connect", args -> DSConnect.instance.getLogger().info("Connected to socket server!"));
 
