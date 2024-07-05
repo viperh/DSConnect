@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class SocketManager {
 
-
+    private boolean continueFlag;
 
     private String url;
 
@@ -46,7 +46,7 @@ public class SocketManager {
     }
 
     public void initializeConnection(){
-
+        this.continueFlag = false;
         while(true){
             try{
 
@@ -59,10 +59,15 @@ public class SocketManager {
                 this.socket = IO.socket(this.url, options);
                 this.socket.on("message", new SocketListener());
 
+                this.socket.on(Socket.EVENT_CONNECT, (args) -> {
+                    DSConnect.instance.getLogger().info("Connected to socket server!");
+                    this.continueFlag = true;
+                });
+
+
                 this.socket.connect();
 
-                if(this.socket.connected()){
-                    DSConnect.instance.getLogger().info("Connected to socket server!");
+                if(this.continueFlag){
                     break;
                 }
             }
