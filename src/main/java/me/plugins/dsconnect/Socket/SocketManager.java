@@ -57,7 +57,7 @@ public class SocketManager {
 
                 Map<String, List<String>> headers = new HashMap<>();
 
-                headers.put("channelId", Collections.singletonList(channelId));
+                headers.put("channel", Collections.singletonList(channelId));
 
                 IO.Options options = IO.Options.builder()
                         .setExtraHeaders(headers)
