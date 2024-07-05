@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class SocketManager {
 
+    private boolean continueFlag;
+
     private String url;
 
     private final ExternalConfigUtils config;
@@ -44,6 +46,7 @@ public class SocketManager {
     }
 
     public void initializeConnection(){
+        this.continueFlag = false;
         while(true){
             try{
                 DSConnect.instance.getLogger().info("Getting channelId from config.yml...");
@@ -66,15 +69,17 @@ public class SocketManager {
 
                 DSConnect.instance.getLogger().info("Adding listeners...");
 
-                this.addListener("message", new SocketListener());
-                this.addListener("connect", args -> DSConnect.instance.getLogger().info("Connected to socket server!"));
+                this.socket.on("message", new SocketListener());
 
-                this.socket.connect();
+                this.socket.on(Socket.EVENT_CONNECT, (args) -> {
+                    DSConnect.instance.getLogger().info("Connected to socket server!");
+                    this.continueFlag = true;
+                });
 
-                if (this.socket.connected()){
-                    DSConnect.instance.getLogger().info("Connected to discord bot! Channel IDs: " + channelIds);
+                if(this.continueFlag){
                     break;
                 }
+
 
 
 
@@ -95,13 +100,7 @@ public class SocketManager {
 
 
 
-    public void addListener(String event, SocketListener listener){
-        this.socket.on(event, listener);
-    }
 
-    public void addListener(String event, Emitter.Listener listener){
-        this.socket.on(event, listener);
-    }
 
     public void sendMessage(String message){
         this.socket.emit("message", message);
