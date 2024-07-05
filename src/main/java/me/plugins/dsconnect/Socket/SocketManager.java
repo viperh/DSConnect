@@ -50,14 +50,14 @@ public class SocketManager {
         while(true){
             try{
                 DSConnect.instance.getLogger().info("Getting channelId from config.yml...");
-                List<String> channelIds = config.getConfiguration().getStringList("channelId");
-                DSConnect.instance.getLogger().info("ChannelID: " + channelIds);
+                String channelId = config.getConfiguration().getString("channelId");
+                DSConnect.instance.getLogger().info("ChannelID: " + channelId);
 
                 DSConnect.instance.getLogger().info("Creating Options for socket...");
 
                 Map<String, List<String>> headers = new HashMap<>();
 
-                headers.put("channelIds", channelIds);
+                headers.put("channelId", Collections.singletonList(channelId));
 
                 IO.Options options = IO.Options.builder()
                         .setExtraHeaders(headers)
@@ -79,10 +79,6 @@ public class SocketManager {
                 if(this.continueFlag){
                     break;
                 }
-
-
-
-
             }
             catch(Exception e){
                 DSConnect.instance.getLogger().severe("Failed to connect to discord bot. Retrying in 10 seconds...");
