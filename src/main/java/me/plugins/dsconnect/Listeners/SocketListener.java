@@ -16,7 +16,7 @@ public class SocketListener implements Emitter.Listener {
             player.sendMessage(objects[0].toString());
         }
 
-
+        DSConnect.instance.getLogger().info("Message received: " + objects[0].toString());
 
     }
 }
