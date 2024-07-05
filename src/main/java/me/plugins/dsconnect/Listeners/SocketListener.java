@@ -12,11 +12,11 @@ public class SocketListener implements Emitter.Listener {
     @Override
     public void call(Object... objects) {
 
-        //for (Player player : Bukkit.getOnlinePlayers()){
-        //    player.sendMessage(objects[0].toString());
-        //}
+        for (Player player : Bukkit.getOnlinePlayers()){
+            player.sendMessage(objects[0].toString());
+        }
 
-        DSConnect.instance.getLogger().info(objects[0].toString());
+
 
     }
 }
