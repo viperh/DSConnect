@@ -76,6 +76,9 @@ public class SocketManager {
                     this.continueFlag = true;
                 });
 
+
+                this.socket.connect();
+
                 if(this.continueFlag){
                     break;
                 }
