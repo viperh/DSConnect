@@ -49,26 +49,14 @@ public class SocketManager {
         this.continueFlag = false;
         while(true){
             try{
-                DSConnect.instance.getLogger().info("Getting channelId from config.yml...");
+
                 String channelId = config.getConfiguration().getString("channelId");
-                DSConnect.instance.getLogger().info("ChannelID: " + channelId);
-
-                DSConnect.instance.getLogger().info("Creating Options for socket...");
-
                 Map<String, List<String>> headers = new HashMap<>();
-
                 headers.put("channel", Collections.singletonList(channelId));
-
                 IO.Options options = IO.Options.builder()
                         .setExtraHeaders(headers)
                         .build();
-
-                DSConnect.instance.getLogger().info("Creating socket connection....");
-
                 this.socket = IO.socket(this.url, options);
-
-                DSConnect.instance.getLogger().info("Adding listeners...");
-
                 this.socket.on("message", new SocketListener());
 
                 this.socket.on(Socket.EVENT_CONNECT, (args) -> {
@@ -89,7 +77,7 @@ public class SocketManager {
 
             try{
                 DSConnect.instance.getLogger().info("Retrying to connect to socket server!...");
-                Thread.sleep(10000);
+                Thread.sleep(3000);
             }
             catch(InterruptedException e){
                 e.printStackTrace();
